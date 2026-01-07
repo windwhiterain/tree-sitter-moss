@@ -35,11 +35,10 @@ module.exports = grammar({
         $.builtin
       ),
     int: ($) => /[+-]?\d+/,
-    string: ($) =>
-      seq(
-        "#",
-        field("value", alias(token.immediate(/[a-zA-Z_][a-zA-Z_0-9]*/), $.name))
-      ),
+    string: ($) => seq('"', repeat(field("content", $.string_content)), '"'),
+    string_content: ($) => choice($.string_raw, $.string_escape),
+    string_raw: ($) => token.immediate(/[^"\\]+/),
+    string_escape: ($) => token.immediate(/\\./),
     name: ($) => /[a-zA-Z_][a-zA-Z_0-9]*/,
     builtin: ($) => prec(1, choice($.builtin_if, $.builtin_add, $.builtin_mod)),
     builtin_if: ($) => "if",

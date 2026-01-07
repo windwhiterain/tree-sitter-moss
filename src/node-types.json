@@ -211,16 +211,35 @@
     "type": "string",
     "named": true,
     "fields": {
-      "value": {
-        "multiple": false,
-        "required": true,
+      "content": {
+        "multiple": true,
+        "required": false,
         "types": [
           {
-            "type": "name",
+            "type": "string_content",
             "named": true
           }
         ]
       }
+    }
+  },
+  {
+    "type": "string_content",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string_escape",
+          "named": true
+        },
+        {
+          "type": "string_raw",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -275,7 +294,7 @@
     }
   },
   {
-    "type": "#",
+    "type": "\"",
     "named": false
   },
   {
@@ -320,6 +339,14 @@
   },
   {
     "type": "name",
+    "named": true
+  },
+  {
+    "type": "string_escape",
+    "named": true
+  },
+  {
+    "type": "string_raw",
     "named": true
   },
   {
