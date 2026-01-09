@@ -42,29 +42,6 @@
     }
   },
   {
-    "type": "builtin",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "builtin_add",
-          "named": true
-        },
-        {
-          "type": "builtin_if",
-          "named": true
-        },
-        {
-          "type": "builtin_mod",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "call",
     "named": true,
     "fields": {
@@ -255,10 +232,6 @@
           "named": true
         },
         {
-          "type": "builtin",
-          "named": true
-        },
-        {
           "type": "call",
           "named": true
         },
@@ -324,18 +297,6 @@
   {
     "type": "=",
     "named": false
-  },
-  {
-    "type": "builtin_add",
-    "named": true
-  },
-  {
-    "type": "builtin_if",
-    "named": true
-  },
-  {
-    "type": "builtin_mod",
-    "named": true
   },
   {
     "type": "int",

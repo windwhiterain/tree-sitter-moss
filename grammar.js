@@ -31,8 +31,7 @@ module.exports = grammar({
         $.name,
         $.call,
         $.find,
-        $.bracket,
-        $.builtin
+        $.bracket
       ),
     int: ($) => /[+-]?\d+/,
     string: ($) => seq('"', repeat(field("content", $.string_content)), '"'),
@@ -40,10 +39,6 @@ module.exports = grammar({
     string_raw: ($) => token.immediate(/[^"\\]+/),
     string_escape: ($) => token.immediate(/\\./),
     name: ($) => /[a-zA-Z_][a-zA-Z_0-9]*/,
-    builtin: ($) => prec(1, choice($.builtin_if, $.builtin_add, $.builtin_mod)),
-    builtin_if: ($) => "if",
-    builtin_add: ($) => "add",
-    builtin_mod: ($) => "mod",
     call: ($) =>
       prec.right(1, seq(field("func", $.value), field("param", $.value))),
     find: ($) =>

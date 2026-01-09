@@ -235,10 +235,6 @@
         {
           "type": "SYMBOL",
           "name": "bracket"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "builtin"
         }
       ]
     },
@@ -300,39 +296,6 @@
     "name": {
       "type": "PATTERN",
       "value": "[a-zA-Z_][a-zA-Z_0-9]*"
-    },
-    "builtin": {
-      "type": "PREC",
-      "value": 1,
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "builtin_if"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "builtin_add"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "builtin_mod"
-          }
-        ]
-      }
-    },
-    "builtin_if": {
-      "type": "STRING",
-      "value": "if"
-    },
-    "builtin_add": {
-      "type": "STRING",
-      "value": "add"
-    },
-    "builtin_mod": {
-      "type": "STRING",
-      "value": "mod"
     },
     "call": {
       "type": "PREC_RIGHT",
