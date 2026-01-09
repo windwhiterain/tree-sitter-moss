@@ -47,7 +47,14 @@ module.exports = grammar({
     call: ($) =>
       prec.right(1, seq(field("func", $.value), field("param", $.value))),
     find: ($) =>
-      prec.left(2, seq(field("value", $.value), field("name", $.name))),
+      prec.left(
+        2,
+        seq(
+          field("value", $.value),
+          token.immediate("."),
+          field("name", $.name)
+        )
+      ),
     bracket: ($) => seq("(", field("value", $.value), ")"),
   },
 });

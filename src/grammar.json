@@ -374,6 +374,13 @@
             }
           },
           {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "."
+            }
+          },
+          {
             "type": "FIELD",
             "name": "name",
             "content": {
