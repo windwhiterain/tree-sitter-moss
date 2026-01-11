@@ -31,6 +31,8 @@ module.exports = grammar({
         $.name,
         $.call,
         $.find,
+        $.meta,
+        $.find_meta,
         $.bracket
       ),
     int: ($) => /[+-]?\d+/,
@@ -50,6 +52,16 @@ module.exports = grammar({
           field("name", $.name)
         )
       ),
+    find_meta: ($) =>
+      prec.left(
+        2,
+        seq(
+          field("value", $.value),
+          token.immediate(".@"),
+          field("name", $.name)
+        )
+      ),
     bracket: ($) => seq("(", field("value", $.value), ")"),
+    meta: ($) => seq("@", field("name", $.name)),
   },
 });
