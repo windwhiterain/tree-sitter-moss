@@ -126,77 +126,6 @@
         }
       ]
     },
-    "pair": {
-      "type": "PREC_RIGHT",
-      "value": -2,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "FIELD",
-            "name": "key",
-            "content": {
-              "type": "SYMBOL",
-              "name": "name"
-            }
-          },
-          {
-            "type": "STRING",
-            "value": ":"
-          },
-          {
-            "type": "FIELD",
-            "name": "value",
-            "content": {
-              "type": "SYMBOL",
-              "name": "value"
-            }
-          }
-        ]
-      }
-    },
-    "dict": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "{"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "REPEAT1",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "FIELD",
-                    "name": "pair",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "pair"
-                    }
-                  },
-                  {
-                    "type": "STRING",
-                    "value": ","
-                  }
-                ]
-              }
-            },
-            {
-              "type": "STRING",
-              "value": ":"
-            }
-          ]
-        },
-        {
-          "type": "STRING",
-          "value": "}"
-        }
-      ]
-    },
     "value": {
       "type": "CHOICE",
       "members": [
@@ -207,10 +136,6 @@
         {
           "type": "SYMBOL",
           "name": "set"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "dict"
         },
         {
           "type": "SYMBOL",
@@ -243,6 +168,14 @@
         {
           "type": "SYMBOL",
           "name": "bracket"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "function"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "trivial"
         }
       ]
     },
@@ -429,6 +362,44 @@
             "type": "SYMBOL",
             "name": "name"
           }
+        }
+      ]
+    },
+    "function": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "in_",
+          "content": {
+            "type": "SYMBOL",
+            "name": "name"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "FIELD",
+          "name": "scope",
+          "content": {
+            "type": "SYMBOL",
+            "name": "scope"
+          }
+        }
+      ]
+    },
+    "trivial": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "STRING",
+          "value": ")"
         }
       ]
     }

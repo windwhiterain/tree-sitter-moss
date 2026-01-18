@@ -17,15 +17,10 @@ module.exports = grammar({
     scope: ($) =>
       seq("{", choice(repeat1(seq(field("assign", $.assign), ";")), "="), "}"),
     set: ($) => seq("{", repeat(seq(field("key", $.name), ",")), "}"),
-    pair: ($) =>
-      prec.right(-2, seq(field("key", $.name), ":", field("value", $.value))),
-    dict: ($) =>
-      seq("{", choice(repeat1(seq(field("pair", $.pair), ",")), ":"), "}"),
     value: ($) =>
       choice(
         $.scope,
         $.set,
-        $.dict,
         $.int,
         $.string,
         $.name,
@@ -33,7 +28,9 @@ module.exports = grammar({
         $.find,
         $.meta,
         $.find_meta,
-        $.bracket
+        $.bracket,
+        $.function,
+        $.trivial,
       ),
     int: ($) => /[+-]?\d+/,
     string: ($) => seq('"', repeat(field("content", $.string_content)), '"'),
@@ -49,8 +46,8 @@ module.exports = grammar({
         seq(
           field("value", $.value),
           token.immediate("."),
-          field("name", $.name)
-        )
+          field("name", $.name),
+        ),
       ),
     find_meta: ($) =>
       prec.left(
@@ -58,10 +55,12 @@ module.exports = grammar({
         seq(
           field("value", $.value),
           token.immediate(".@"),
-          field("name", $.name)
-        )
+          field("name", $.name),
+        ),
       ),
     bracket: ($) => seq("(", field("value", $.value), ")"),
     meta: ($) => seq("@", field("name", $.name)),
+    function: ($) => seq(field("in_", $.name), "->", field("scope", $.scope)),
+    trivial: ($) => seq("(", ")"),
   },
 });
