@@ -131,6 +131,10 @@
       "members": [
         {
           "type": "SYMBOL",
+          "name": "function"
+        },
+        {
+          "type": "SYMBOL",
           "name": "scope"
         },
         {
@@ -168,10 +172,6 @@
         {
           "type": "SYMBOL",
           "name": "bracket"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "function"
         },
         {
           "type": "SYMBOL",

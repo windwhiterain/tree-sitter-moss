@@ -19,6 +19,7 @@ module.exports = grammar({
     set: ($) => seq("{", repeat(seq(field("key", $.name), ",")), "}"),
     value: ($) =>
       choice(
+        $.function,
         $.scope,
         $.set,
         $.int,
@@ -29,7 +30,6 @@ module.exports = grammar({
         $.meta,
         $.find_meta,
         $.bracket,
-        $.function,
         $.trivial,
       ),
     int: ($) => /[+-]?\d+/,
