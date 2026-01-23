@@ -7,6 +7,9 @@
 /// <reference types="tree-sitter-cli/dsl" />
 // @ts-check
 
+var name = token(/[a-zA-Z_][a-zA-Z_0-9]*/);
+var int = token(/[+-]?\d+/);
+
 module.exports = grammar({
   name: "moss",
 
@@ -24,43 +27,50 @@ module.exports = grammar({
         $.set,
         $.int,
         $.string,
-        $.name,
-        $.call,
         $.find,
-        $.meta,
-        $.find_meta,
+        $.meta_find,
+        $.find_in,
+        $.meta_find_in,
+        $.call,
         $.bracket,
         $.trivial,
       ),
-    int: ($) => /[+-]?\d+/,
-    string: ($) => seq('"', repeat(field("content", $.string_content)), '"'),
+    int: ($) => int,
+    string: ($) =>
+      seq(
+        '"',
+        repeat(field("content", $.string_content)),
+        token.immediate('"'),
+      ),
     string_content: ($) => choice($.string_raw, $.string_escape),
     string_raw: ($) => token.immediate(/[^"\\]+/),
     string_escape: ($) => token.immediate(/\\./),
-    name: ($) => /[a-zA-Z_][a-zA-Z_0-9]*/,
     call: ($) =>
       prec.right(1, seq(field("func", $.value), field("param", $.value))),
-    find: ($) =>
+    find: ($) => $.name,
+    meta_find: ($) => seq("@", field("name", $.name_imd)),
+    find_in: ($) =>
       prec.left(
         2,
         seq(
           field("value", $.value),
           token.immediate("."),
-          field("name", $.name),
+          field("name", $.name_imd),
         ),
       ),
-    find_meta: ($) =>
+    meta_find_in: ($) =>
       prec.left(
         2,
         seq(
           field("value", $.value),
           token.immediate(".@"),
-          field("name", $.name),
+          field("name", $.name_imd),
         ),
       ),
+    name: ($) => name,
+    name_imd: ($) => token.immediate(name),
+    function: ($) => seq(field("param", $.name), "->", field("scope", $.scope)),
     bracket: ($) => seq("(", field("value", $.value), ")"),
-    meta: ($) => seq("@", field("name", $.name)),
-    function: ($) => seq(field("in_", $.name), "->", field("scope", $.scope)),
     trivial: ($) => seq("(", ")"),
   },
 });

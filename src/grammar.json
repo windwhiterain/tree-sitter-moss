@@ -151,23 +151,23 @@
         },
         {
           "type": "SYMBOL",
-          "name": "name"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "call"
-        },
-        {
-          "type": "SYMBOL",
           "name": "find"
         },
         {
           "type": "SYMBOL",
-          "name": "meta"
+          "name": "meta_find"
         },
         {
           "type": "SYMBOL",
-          "name": "find_meta"
+          "name": "find_in"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "meta_find_in"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "call"
         },
         {
           "type": "SYMBOL",
@@ -180,8 +180,11 @@
       ]
     },
     "int": {
-      "type": "PATTERN",
-      "value": "[+-]?\\d+"
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[+-]?\\d+"
+      }
     },
     "string": {
       "type": "SEQ",
@@ -202,8 +205,11 @@
           }
         },
         {
-          "type": "STRING",
-          "value": "\""
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "\""
+          }
         }
       ]
     },
@@ -234,10 +240,6 @@
         "value": "\\\\."
       }
     },
-    "name": {
-      "type": "PATTERN",
-      "value": "[a-zA-Z_][a-zA-Z_0-9]*"
-    },
     "call": {
       "type": "PREC_RIGHT",
       "value": 1,
@@ -264,6 +266,27 @@
       }
     },
     "find": {
+      "type": "SYMBOL",
+      "name": "name"
+    },
+    "meta_find": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "@"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "name_imd"
+          }
+        }
+      ]
+    },
+    "find_in": {
       "type": "PREC_LEFT",
       "value": 2,
       "content": {
@@ -289,13 +312,13 @@
             "name": "name",
             "content": {
               "type": "SYMBOL",
-              "name": "name"
+              "name": "name_imd"
             }
           }
         ]
       }
     },
-    "find_meta": {
+    "meta_find_in": {
       "type": "PREC_LEFT",
       "value": 2,
       "content": {
@@ -321,11 +344,53 @@
             "name": "name",
             "content": {
               "type": "SYMBOL",
-              "name": "name"
+              "name": "name_imd"
             }
           }
         ]
       }
+    },
+    "name": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[a-zA-Z_][a-zA-Z_0-9]*"
+      }
+    },
+    "name_imd": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "TOKEN",
+        "content": {
+          "type": "PATTERN",
+          "value": "[a-zA-Z_][a-zA-Z_0-9]*"
+        }
+      }
+    },
+    "function": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "param",
+          "content": {
+            "type": "SYMBOL",
+            "name": "name"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "->"
+        },
+        {
+          "type": "FIELD",
+          "name": "scope",
+          "content": {
+            "type": "SYMBOL",
+            "name": "scope"
+          }
+        }
+      ]
     },
     "bracket": {
       "type": "SEQ",
@@ -345,48 +410,6 @@
         {
           "type": "STRING",
           "value": ")"
-        }
-      ]
-    },
-    "meta": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "@"
-        },
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "name"
-          }
-        }
-      ]
-    },
-    "function": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "FIELD",
-          "name": "in_",
-          "content": {
-            "type": "SYMBOL",
-            "name": "name"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "->"
-        },
-        {
-          "type": "FIELD",
-          "name": "scope",
-          "content": {
-            "type": "SYMBOL",
-            "name": "scope"
-          }
         }
       ]
     },
